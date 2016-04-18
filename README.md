@@ -23,12 +23,33 @@ This library is a download manager android/java library which developers can use
 Usage
 =====
 
-In the first stage, you need to include these permissions in your `AndroidManifest.xml` file
-```xml
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+Step 1. Add the JitPack repository to your build file
+
 ```
-After that, import **com.golshadi.downloadManager** package in your packages folder. So now everything is ready to start.
+allprojects {
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+
+Step 2. Add the dependency
+
+```
+dependencies {
+    compile 'com.github.halilozercan:Android-Download-Manager-Pro:0.0.1'
+}
+```
+
+### Permission Warning
+
+Normally, library contains WRITE_EXTERNAL_STORAGE permission in its manifest but after Marshmallow(6.0, API23), Android introduced permission requests at runtime.
+If you are developing for latest Android versions, you should take care of getting permissions inside your app before calling the library to make a download.
+
+This link http://developer.android.com/training/permissions/requesting.html will help you get started.
+
+TODO: Library will provide an interface to get this permission for you.
 
 Let's get started
 =================
@@ -37,7 +58,7 @@ One of the important benefits of this lib is that you don't need to initialize o
 ```java
 DownloadManagerPro dm = new DownloadManagerPro(Context);
 ```
-to get report about tasks you can use these methods that will be introduced later on this doc:
+To get report about tasks you can use these methods that will be introduced later on this doc:
 ```java
 public ReportStructure singleDownloadStatus(int token);
 public List<ReportStructure> downloadTasksInSameState(int state);
@@ -51,7 +72,7 @@ public boolean delete(int token, boolean deleteTaskFile);
 Initialize DownloadManagerPro
 =============================
 
-in order to download with this lib you need to set its basic configurations and give him a listener to poke you about tasks status.
+In order to download with this lib you need to set its basic configurations and give him a listener to poke you about tasks status.
 ```java
 void DownloadManagerPro.init(String saveFilePath, int maxChunk, DownloadManagerListener class)
 ```
@@ -77,7 +98,7 @@ public class MyActivity extends Activity implements DownloadManagerListener {
 
 -----------------
 
-there are three ways to define your download task, so you can define it any way you want. for example If you didn't set maximum chunks number or sd card folder address it uses your initialized values. these methods return you a task id that you can call to start or pause that task using this token.
+There are three ways to define your download task, so you can define it any way you want. for example If you didn't set maximum chunks number or sd card folder address it uses your initialized values. these methods return you a task id that you can call to start or pause that task using this token.
 ```java
 int DownloadManagerPro.addTask(String saveName, String url, int chunk, String sdCardFolderAddress, boolean overwrite, boolean priority)
 
@@ -96,7 +117,7 @@ int DownloadManagerPro.addTask(String saveName, String url, boolean overwrite, b
 
 Example:
 ```java
-int taskToekn = dm.addTask("save_name", "http://www.site.com/video/ss.mp4", false, false);
+int taskToken = dm.addTask("save_name", "http://www.site.com/video/ss.mp4", false, false);
 ```
 
 ----
@@ -110,11 +131,11 @@ void DownloadManagerPro.startDownload(int token) throws IOException
 Example:
 ```java
 try {
-        dm.startDownload(taskToekn);
+    dm.startDownload(taskToken);
 
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
+} catch (IOException e) {
+    e.printStackTrace();
+}
 ```
 
 ----
@@ -127,7 +148,7 @@ void DownloadManagerPro.pauseDownload(int token)
 
 Example:
 ```java
-dm.pauseDownload(taskToekn);
+dm.pauseDownload(taskToken);
 ```
 
 ----
@@ -150,11 +171,11 @@ int downloadTaskPerTime: the number of task that can be downloaded simultaneousl
 Example:
 ``` java
 try {
-        dm.startQueueDownload(3, QueueSort.oldestFirst);
+    dm.startQueueDownload(3, QueueSort.oldestFirst);
 
-    } catch (QueueDownloadInProgressException e) {
-        e.printStackTrace();
-    }
+} catch (QueueDownloadInProgressException e) {
+    e.printStackTrace();
+}
 ```
 
 -----
@@ -169,11 +190,11 @@ Example:
 
 ```java
 try {
-        dm.pauseQueueDownload();
+    dm.pauseQueueDownload();
 
-    } catch (QueueDownloadNotStartedException e){
-        e.printStackTrace();
-    }
+} catch (QueueDownloadNotStartedException e){
+    e.printStackTrace();
+}
 ```
 
 Report
