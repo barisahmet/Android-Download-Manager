@@ -1,5 +1,6 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Android--Download--Manager-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2131)
 [![The MIT License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/majidgolshadi/Android-Download-Manager-Pro/blob/master/LICENSE)
+[![](https://jitpack.io/v/barisahmet/Android-Download-Manager.svg)](https://jitpack.io/#barisahmet/Android-Download-Manager)
 
 Android-Download-Manager
 ========================
@@ -38,7 +39,7 @@ Step 2. Add the dependency
 
 ```
 dependencies {
-    compile 'com.github.halilozercan:Android-Download-Manager-Pro:0.0.1'
+    compile 'com.github.barisahmet:Android-Download-Manager-Pro:0.0.1'
 }
 ```
 
